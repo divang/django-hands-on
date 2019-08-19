@@ -67,7 +67,8 @@ from django.http import HttpResponse
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
     
-To create a URLconf in the polls directory, create a file called urls.py
+To create a URLconf in the polls directory, create a file called 
+polls/urls.py:
 from django.urls import path
 from . import views
 urlpatterns = [
@@ -75,6 +76,14 @@ urlpatterns = [
 ]
 
 
+The next step is to point the root URLconf at the polls.urls module, 
+mysite/urls.py:
+from django.contrib import admin
+from django.urls import include, path
+urlpatterns = [
+    path('polls/', include('polls.urls')),
+    path('admin/', admin.site.urls),
+]
 
 
  
