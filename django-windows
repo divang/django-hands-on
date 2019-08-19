@@ -1,0 +1,28 @@
+To install Django in Windows:
+
+To install Pip (if it is not already install):
+
+Download get-pip.py
+https://bootstrap.pypa.io/get-pip.py
+
+Run the above py file which install the pip:
+python get-pip.py
+
+Install virtualenv and virtualenvwrapper: virtualenv and virtualenvwrapper provide a dedicated environment 
+for each Django project you create. While not mandatory, this is considered a best practice and 
+will save you time in the future when you’re ready to deploy your project. 
+Simply type:
+
+pip install virtualenvwrapper-win
+
+Then create a virtual environment for your project:
+mkvirtualenv myproject
+
+If you start a new command prompt, you’ll need to activate the environment again using:
+workon myproject
+
+Install Django:
+pip install django
+
+verify your Django installation by executing 
+django-admin --version 
