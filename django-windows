@@ -46,6 +46,36 @@ Django version 2.2, using settings 'mysite.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 
+To create your app, make sure you’re in the same directory as manage.py and type this command:
+python manage.py startapp polls
+
+create a directory polls, which is laid out like this:
+polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    views.py
+    
+Write your first view. Open the file 
+polls/views.py
+
+from django.http import HttpResponse
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+    
+To create a URLconf in the polls directory, create a file called urls.py
+from django.urls import path
+from . import views
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+
+
+
 
  
 
