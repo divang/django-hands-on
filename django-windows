@@ -86,6 +86,7 @@ urlpatterns = [
 ]
 
 
- 
-
+python manage.py runserver 
+Check the polls site:
+http://localhost:8000/polls/
 
