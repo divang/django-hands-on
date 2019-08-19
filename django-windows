@@ -25,4 +25,28 @@ Install Django:
 pip install django
 
 verify your Django installation by executing 
-django-admin --version 
+python -m django --version
+
+Creating a project
+django-admin startproject mysite
+
+Folder structure:
+mysite/
+    manage.py
+    mysite/
+        __init__.py
+        settings.py
+        urls.py
+        wsgi.py
+
+The development server
+python manage.py runserver
+
+Django version 2.2, using settings 'mysite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+
+ 
+
+
