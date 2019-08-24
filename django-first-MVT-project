@@ -1,0 +1,161 @@
+To install Django in Windows:
+
+To install Pip (if it is not already install):
+
+Download get-pip.py
+https://bootstrap.pypa.io/get-pip.py
+
+Run the above py file which install the pip:
+python get-pip.py
+
+Install virtualenv and virtualenvwrapper: virtualenv and virtualenvwrapper provide a dedicated environment 
+for each Django project you create. While not mandatory, this is considered a best practice and 
+will save you time in the future when you’re ready to deploy your project. 
+Simply type:
+
+pip install virtualenvwrapper-win
+
+Then create a virtual environment for your project:
+mkvirtualenv myproject
+
+If you start a new command prompt, you’ll need to activate the environment again using:
+workon myproject
+
+Install Django:
+pip install django
+
+verify your Django installation by executing 
+python -m django --version
+
+Creating a project
+django-admin startproject mysite
+
+Folder structure:
+mysite/
+    manage.py
+    mysite/
+        __init__.py
+        settings.py
+        urls.py
+        wsgi.py
+
+The development server
+python manage.py runserver
+
+Django version 2.2, using settings 'mysite.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+To create your app, make sure you’re in the same directory as manage.py and type this command:
+python manage.py startapp polls
+
+create a directory polls, which is laid out like this:
+polls/
+    __init__.py
+    admin.py
+    apps.py
+    migrations/
+        __init__.py
+    models.py
+    tests.py
+    views.py
+    
+Write your first view. Open the file 
+polls/views.py
+
+from django.http import HttpResponse
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
+    
+To create a URLconf in the polls directory, create a file called 
+polls/urls.py:
+from django.urls import path
+from . import views
+urlpatterns = [
+    path('', views.index, name='index'),
+]
+
+
+The next step is to point the root URLconf at the polls.urls module, 
+mysite/urls.py:
+from django.contrib import admin
+from django.urls import include, path
+urlpatterns = [
+    path('polls/', include('polls.urls')),
+    path('admin/', admin.site.urls),
+]
+
+
+python manage.py runserver 
+Check the polls site:
+http://localhost:8000/polls/
+
+Add Models: edit the polls/models.py file
+from django.db import models
+
+
+class Question(models.Model):
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+To create the tables in the database before we can use them. To do that, run the following command:
+python manage.py migrate
+
+To include the app in our project, we need to add a reference to its configuration class in the INSTALLED_APPS setting
+mysite/settings.py
+INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+Migarate Polls: By running makemigrations, you’re telling Django that you’ve made some changes to your models 
+(in this case, you’ve made new ones) and that you’d like the changes to be stored as a migration.
+python manage.py makemigrations polls
+
+Migrations for 'polls':
+  polls/migrations/0001_initial.py:
+    - Create model Choice
+    - Create model Question
+    - Add field question to choice
+    
+
+python manage.py sqlmigrate polls 0001
+python manage.py migrate
+
+Insert data to table:
+python manage.py shell
+>>> from polls.models import Choice, Question
+>>> Question.objects.all()
+>>> from django.utils import timezone
+>>> q = Question(question_text="What's new?", pub_date=timezone.now())
+>>> q.save()
+>>> q.id
+>>> q.question_text = "What's up?"
+>>> q.save()
+>>> Question.objects.all()
+>>> Question.objects.filter(id=1)
+>>> Question.objects.filter(question_text__startswith='What')
+>>> from django.utils import timezone
+>>> current_year = timezone.now().year
+>>> Question.objects.get(pk=1)
+>>> q = Question.objects.get(pk=1)
+>>> q.choice_set.all()
+>>> q.choice_set.create(choice_text='Not much', votes=0)
+>>> q.choice_set.create(choice_text='The sky', votes=0)
+>>> c = q.choice_set.create(choice_text='Just hacking again', votes=0)
+>>> c.question
+>>> q.choice_set.all()
+>>> q.choice_set.count()
+>>> c = q.choice_set.filter(choice_text__startswith='Just hacking')
+>>> c.delete()
