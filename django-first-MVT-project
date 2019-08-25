@@ -178,6 +178,10 @@ Make the poll app modifiable in the admin
 open the polls/admin.py 
 
 from django.contrib import admin
-from .models import Question
+from .models import Question, Choice
 admin.site.register(Question)
+admin.site.register(Choice)
+
+Add/Modify/Delete the questions in Admin page.
+
 
