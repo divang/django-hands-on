@@ -167,3 +167,17 @@ python manage.py createsuperuser
 Username: admin
 Email address: admin@example.com
 Password: ***
+
+Start the development server
+python manage.py runserver
+
+Visit:
+http://127.0.0.1:8000/admin/
+
+Make the poll app modifiable in the admin
+open the polls/admin.py 
+
+from django.contrib import admin
+from .models import Question
+admin.site.register(Question)
+
