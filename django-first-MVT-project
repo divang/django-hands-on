@@ -159,3 +159,11 @@ python manage.py shell
 >>> q.choice_set.count()
 >>> c = q.choice_set.filter(choice_text__startswith='Just hacking')
 >>> c.delete()
+
+
+Creating an admin user
+python manage.py createsuperuser
+
+Username: admin
+Email address: admin@example.com
+Password: ***
